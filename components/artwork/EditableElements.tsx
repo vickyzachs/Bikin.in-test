@@ -9,21 +9,25 @@ export default function EditableArea({ element }: Props) {
     <div
       className="
         absolute
+        z-10
         border-2
         border-dashed
-        border-blue-500
-        bg-blue-100/40
+        border-cyan-400
+        bg-cyan-300/20
+        rounded-md
         flex
         items-center
         justify-center
         text-xs
-        font-medium
+        font-semibold
+        text-cyan-700
       "
       style={{
         left: `${element.xAxis}%`,
         top: `${element.yAxis}%`,
         width: `${element.size}px`,
         height: `${element.size}px`,
+        transform: "translate(-50%, -50%)",
       }}
     >
       {element.label}
