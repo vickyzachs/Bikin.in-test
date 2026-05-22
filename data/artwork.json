@@ -1,0 +1,30 @@
+{
+  "id": 1,
+  "title": "Coffee Packaging Label Template",
+  "product": "Packaging Label",
+  "sku": "AW202605220001",
+  "description": "Premium packaging label template.",
+  "views": 321,
+  "wishlist": 87,
+  "design": {
+    "backgroundUrl": "/mock/bg.jpg",
+    "elements": [
+      {
+        "id": "el-1",
+        "label": "logo",
+        "type": "file",
+        "xAxis": 11.62,
+        "yAxis": 6.1,
+        "size": 23
+      },
+      {
+        "id": "el-2",
+        "label": "judul",
+        "type": "text",
+        "xAxis": 51.51,
+        "yAxis": 40.9,
+        "size": 64
+      }
+    ]
+  }
+}
