@@ -12,13 +12,14 @@ export default function ArtworkPreview({ artwork }: Props) {
   return (
     <div className="space-y-5">
       {/* Preview Box */}
-      <div className="relative bg-gray-100 rounded-xl p-6">
+      <div className="relative w-full aspect-[4/5] overflow-hidden rounded-xl">
         <div className="relative w-full aspect-[3/4]">
           <Image
             src={front.background}
             alt={artwork.title}
             fill
-            className="rounded-lg object-contain"
+            sizes="100vw"
+            className="object-cover"
             priority
           />
         </div>
