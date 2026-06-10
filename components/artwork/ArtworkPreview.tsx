@@ -1,32 +1,44 @@
 import Image from "next/image";
-import { Artwork } from "@/types/artwork";
-import EditableArea from "./EditableElements";
+import EditableElement from "./EditableElements";
+import { Prisma } from "@prisma/client";
 
+type ArtworkWithRelations = Prisma.ArtworkGetPayload<{
+  include: {
+    user: true;
+    sheets: {
+      include: {
+        elements: true;
+      };
+    };
+  };
+}>;
 interface Props {
-  artwork: Artwork;
+  artwork: ArtworkWithRelations;
 }
 
 export default function ArtworkPreview({ artwork }: Props) {
-  const front = artwork.design.sheets[0].sides.front;
-
+  const sheet = artwork.sheets[0];
+  if (!sheet) {
+    return <div className="bg-white rounded-xl p-4">No Sheet Found</div>;
+  }
   return (
     <div className="space-y-5">
       {/* Preview Box */}
       <div className="relative w-full aspect-[4/5] overflow-hidden rounded-xl">
         <div className="relative w-full aspect-[3/4]">
-          <Image
-            src={front.background}
-            alt={artwork.title}
-            fill
-            sizes="100vw"
-            className="object-cover"
-            priority
-          />
+          {sheet.background && (
+            <Image
+              src={sheet.background}
+              alt={artwork.title}
+              fill
+              sizes="(max-width:768px) 100vw, 50vw"
+              className="object-contain rounded-lg"
+            />
+          )}
         </div>
 
-        {/* Dynamic editable elements */}
-        {front.elements.map((element) => (
-          <EditableArea key={element.id} element={element} />
+        {sheet.elements.map((element) => (
+          <EditableElement key={element.id} element={element} />
         ))}
       </div>
 

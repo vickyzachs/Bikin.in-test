@@ -1,13 +1,29 @@
-import artworkData from "@/data/artwork.json";
-import { Artwork } from "@/types/artwork";
-
 import Navbar from "@/components/artwork/NavigationBar";
 import ArtworkPreview from "@/components/artwork/ArtworkPreview";
 import ArtworkDetail from "@/components/artwork/ArtworkDetail";
 
-const artwork = (artworkData as Artwork[])[0];
+import { prisma } from "@/lib/prisma";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const artwork = await prisma.artwork.findFirst({
+    include: {
+      user: true,
+
+      sheets: {
+        include: {
+          elements: true,
+        },
+      },
+    },
+  });
+
+  if (!artwork) {
+    return (
+      <main className="p-10">
+        <h1>No Artwork Found</h1>
+      </main>
+    );
+  }
   return (
     <main className="min-h-screen bg-gray-50">
       <Navbar />

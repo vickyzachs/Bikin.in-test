@@ -1,7 +1,18 @@
 import type { EditableElement } from "@/types/artwork";
 
 interface EditableElementProps {
-  element: EditableElement;
+  element: {
+    id: string;
+    label: string;
+    type: string;
+
+    image: string | null;
+
+    xAxis: number;
+    yAxis: number;
+
+    size: number;
+  };
 }
 
 export default function EditableElement({ element }: EditableElementProps) {

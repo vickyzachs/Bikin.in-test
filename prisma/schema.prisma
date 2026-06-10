@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String
+
+  artworks Artwork[]
+}
+
+model Artwork {
+  id          Int      @id @default(autoincrement())
+
+  title       String
+  product     String
+
+  sku         String   @unique
+  slug        String   @unique
+
+  description String
+
+  skala       String?
+  orientasi   String?
+  shape       String?
+  dimension   String?
+
+  views       Int      @default(0)
+  shows       Int      @default(0)
+  wishlist    Int      @default(0)
+
+  userId      Int
+  user        User     @relation(fields:[userId], references:[id])
+
+  sheets      Sheet[]
+
+  createdAt   DateTime @default(now())
+}
+model Sheet {
+  id          String   @id
+
+  background  String?
+
+  artworkId   Int
+  artwork     Artwork  @relation(fields:[artworkId], references:[id])
+
+  elements    Element[]
+}
+
+model Element {
+  id          String   @id
+
+  label       String
+  type        String
+
+  image       String?
+  value       String?
+  animation   String?
+
+  xAxis       Float
+  yAxis       Float
+
+  size        Float
+
+  sheetId     String
+  sheet       Sheet @relation(fields:[sheetId], references:[id])
+}

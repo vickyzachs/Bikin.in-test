@@ -1,7 +1,18 @@
-import { Artwork } from "@/types/artwork";
+import { Prisma } from "@prisma/client";
 
+type ArtworkWithRelations =
+  Prisma.ArtworkGetPayload<{
+    include: {
+      user: true;
+      sheets: {
+        include: {
+          elements: true;
+        };
+      };
+    };
+  }>;
 interface Props {
-  artwork: Artwork;
+  artwork: ArtworkWithRelations;
 }
 
 export default function ArtworkDetail({ artwork }: Props) {
@@ -26,10 +37,10 @@ export default function ArtworkDetail({ artwork }: Props) {
         <Info label="Views" value={String(artwork.views)} />
         <Info label="Wishlist" value={String(artwork.wishlist)} />
         <Info label="Shows" value={String(artwork.shows)} />
-        <Info label="Skala" value={artwork.skala} />
-        <Info label="Orientasi" value={artwork.orientasi} />
-        <Info label="Shape" value={artwork.shape} />
-        <Info label="Dimension" value={artwork.dimension} />
+        <Info label="Skala" value={artwork.skala ?? ""} />
+        <Info label="Orientasi" value={artwork.orientasi ?? ""} />
+        <Info label="Shape" value={artwork.shape ?? ""} />
+        <Info label="Dimension" value={artwork.dimension ?? ""} />
       </div>
 
       {/* Package */}
